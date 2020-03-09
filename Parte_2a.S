@@ -1,4 +1,6 @@
-		MOV		R4, #0x500
+		MOV		R4, #0x500		; Inicializacion de R4
+
+		; Escribir el nombre
 		
 		MOV		R0, #0x63			;C
 		STR		R0, [R4]
@@ -53,17 +55,22 @@
 		ADD		R4, R4, #4
 
 
+
+		;Empieza Algoritmo de Encripcion
 		
-		
-		MOV		R4, #0x500
-		MOV		R5, #0x530
-		ADD		R5, R5, #4
-		MOV		R12, #0x620
-COMP		CMP		R4, R5
+		MOV		R4, #0x500		;Posicion inicial del nombre
+		MOV		R5, #0x530		;Posicion final del nombre
+		ADD		R5, R5, #4		
+		MOV		R12, #0x620		;Posicion inicial de la encripcion
+COMP		CMP		R4, R5			;Condicion de parada
 		BGE		FINITO
 		
-		LDR		R6, [R4]
-		ADD		R6, R6, #23
+		LDR		R6, [R4]			;Carga valor de R4 en R6
+		ADD		R6, R6, #23		;Suma 23d al valor en la posicion de memoria R4 mostrada en R6
+
+
+
+		;LSFR
 		
 		MOV		R0, R6
 		MOV		R1, #1
@@ -86,10 +93,12 @@ COMP		CMP		R4, R5
 		LSL		R10, R10, #7
 		LSR		R2, R2, #1
 		ADD		R2, R2, R10
+
 		
-		STR		R2, [R12]
-		ADD		R12, R12, #4
-		ADD		R4, R4, #4
+		
+		STR		R2, [R12]				;Guarda valor encriptado
+		ADD		R12, R12, #4			;Siguiente posicion
+		ADD		R4, R4, #4			;Siguiente posicion
 		
 		B		COMP
 
