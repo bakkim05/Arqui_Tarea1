@@ -1,3 +1,5 @@
+		;Inicializacion
+		
 		MOV		R9, #0xF0
 		MOV		R11, #0x600
 		MOV		R12, R11
@@ -19,7 +21,7 @@ LSFR0	CMP		R4, R5
 		
 		
 		
-		
+		;LSFR
 		
 LSFR1	LDR		R7, [R4]
 		MOV		R0, R7
@@ -67,7 +69,7 @@ grande	MOV		R6, R2
 		
 		
 		
-		
+		;Calculo de Primos
 		
 SIEVE	MOV		R0, R6		;Numero Final
 		MOV		R7, #0x800	;Posicion de Memoria Inicial
@@ -121,8 +123,8 @@ ciclo0	CMP		R5, R7		;Mem Temp Vs. Mem Final
 		
 		
 		
-ES0		ADD		R6, R6, #4
-		MOV		R5, R6
+ES0		ADD		R6, R6, #4	;Si es cero se va a la siguiente direccion de R6
+		MOV		R5, R6		;Mueve a R5 en la misma direccion que R6
 		B		FOO
 		
 		
@@ -141,28 +143,29 @@ cicloMUL	ADD		R2,R2,R0
 		B		compMUL
 		
 		
+
+		;Evaluacion de Pseudo Aleatorios Primos
 		
+FINDER	MOV		R6, #0x700		;Mueve a R6 donde se van a colocar los valores finales de los primos
+		MOV		R5, #0x500		;Mueve a R5 donde estan colocados los numeros pseudo-alazares
+		MOV		R12, #0x740		;Mueve a R12 a la posicion final de memoria que ocuparia los primos evaluados
+		ADD		R12, R12, #0xC		
 		
-FINDER	MOV		R6, #0x700
-		MOV		R5, #0x500
-		MOV		R12, #0x740
-		ADD		R12, R12, #0xC
-		
-LOOP1	CMP		R6, R12
+LOOP1	CMP		R6, R12			;Revisa si ya llego al primo final
 		BGT		FINALE
 		
 		
-		MOV		R7, #0x800
-		MOV		R8, #0
-		LDR		R8, [R5]
+		MOV		R7, #0x800		;Mover a R7 a la base del listado de primos evaluados
+		MOV		R8, #0			;Inicializa R8
+		LDR		R8, [R5]			;Ingrea a R8 el valor de la direccion de memoria en R5
 		B		MUL2
 		
-rtnMUL2	ADD		R7, R7, R2
-		LDR		R9, [R7]
-		STR		R9, [R6]
+rtnMUL2	ADD		R7, R7, R2		;Se mueve a la direccion de memoria de la evaluacion del primo
+		LDR		R9, [R7]			;Se extrae el valor de la evaluacion del primo
+		STR		R9, [R6]			;Se guarda el valor a la posicion de memoria de los primos evaluados
 		
-		ADD		R6, R6, #4
-		ADD		R5, R5, #4
+		ADD		R6, R6, #4		;Siguiente posicion de R6
+		ADD		R5, R5, #4		;Siguiente posicion de R5
 		B		LOOP1
 		
 		
